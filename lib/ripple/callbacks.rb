@@ -31,7 +31,6 @@ module Ripple
         options = args.extract_options!
         options[:prepend] = true
         options[:if] = Array(options[:if])
-        options[:if] << "!halted && value != false"
         options[:if] << "@_on_validate == :#{options[:on]}" if options[:on]
         set_callback(:validation, :after, *(args << options), &block)
       end

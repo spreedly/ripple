@@ -1,5 +1,6 @@
 require 'active_support/concern'
 require 'active_support/dependencies'
+require 'active_support/core_ext/array'
 require 'riak/walk_spec'
 require 'ripple/translation'
 require 'ripple/associations/proxy'
@@ -165,10 +166,18 @@ module Ripple
         next if documents.nil?
 
         Array(documents).each do |doc|
-          doc.send("_#{name}_callbacks").each do |callback|
-            next unless callback.kind == kind
-            doc.send(callback.filter)
-          end
+          cbs = doc.send("_#{name}_callbacks")
+          filtered_cbs = ActiveSupport::Callbacks::CallbackChain.new(
+            cbs.name,
+            cbs.config
+          )
+          filtered_cbs.append(
+            *cbs.select do |callback|
+              callback.kind == kind
+            end
+          )
+          runner = filtered_cbs.compile
+          runner.call(ActiveSupport::Callbacks::Filters::Environment.new(doc, false, nil, nil)).value
         end
       end
     end

@@ -1,7 +1,7 @@
 require 'ripple/translation'
 require 'active_support/concern'
 require 'active_model/attribute_methods'
-require 'active_model/mass_assignment_security'
+require 'active_model/forbidden_attributes_protection'
 require 'ripple/attribute_methods/read'
 require 'ripple/attribute_methods/write'
 require 'ripple/attribute_methods/query'
@@ -20,9 +20,9 @@ module Ripple
       include Write
       include Query
       include Dirty
-      include ActiveModel::MassAssignmentSecurity
+      include ActiveModel::ForbiddenAttributesProtection
 
-      attr_protected :key
+#      attr_protected :key
     end
 
     module ClassMethods

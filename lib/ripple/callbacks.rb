@@ -12,7 +12,7 @@ module Ripple
     included do
       extend ActiveModel::Callbacks
       define_model_callbacks *(CALLBACK_TYPES - [:validation])
-      define_callbacks :validation, :terminator => "result == false", :scope => [:kind, :name]
+      define_callbacks :validation, :terminator => proc{|_,result| result == false}, :scope => [:kind, :name]
     end
 
     module ClassMethods
@@ -43,7 +43,7 @@ module Ripple
         super
       end
     end
-    
+
     def run_save_callbacks
       state = new? ? :create : :update
       run_callbacks(:save) do
@@ -52,14 +52,14 @@ module Ripple
         end
       end
     end
-    
+
     # @private
     def destroy!(*args, &block)
       run_callbacks(:destroy) do
         super
       end
     end
-    
+
     # @private
     def valid?(*args, &block)
       @_on_validate = new? ? :create : :update

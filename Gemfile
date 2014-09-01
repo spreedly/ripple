@@ -15,3 +15,5 @@ end
 platforms :jruby do
   gem 'jruby-openssl'
 end
+
+gem "riak_test_server", github: "ntalbott/riak_test_server", branch: "master"

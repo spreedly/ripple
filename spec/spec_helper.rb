@@ -6,16 +6,13 @@ require 'rubygems' # Use the gems path only for the spec suite
 require 'ripple'
 require 'ripple/conflict/test_helper'
 require 'rspec'
-require 'ammeter'
 
 # Only the tests should really get away with this.
 Riak.disable_list_keys_warnings = true
 
 %w[
    integration_setup
-   generator_setup
    test_server
-   search
    models
    associations
   ].each do |file|

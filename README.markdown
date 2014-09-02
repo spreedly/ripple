@@ -84,21 +84,16 @@ person.account.paid_until = 3.months.from_now
 
 ## Configuration Example
 
-When using Ripple with Rails 3, add ripple to your Gemfile.
+When using Ripple with Rails 4, add ripple to your Gemfile.
 
-`config/ripple.yml` should contain your Riak connection information. Example:
+Configure in an initializer:
 
-``` yaml
-# Configure Riak connections for the Ripple library.
-development:
-  http_port: 8098
-  pb_port: 8087
-  host: 127.0.0.1
-
-production:
-  http_port: 8098
-  pb_port: 8087
-  host: 127.0.0.1
+```ruby
+Ripple.config = {
+  host: "127.0.0.1",
+  http_port: ENV["RIAK_HTTP_PORT"] || 8098,
+  pb_port: ENV["RIAK_PB_PORT"] || 8087
+}
 ```
 
 

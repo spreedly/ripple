@@ -12,12 +12,16 @@ RSpec.configure do |config|
     )
   end
 
-  config.before(:each, :integration => true) do
+  config.before(:each, integration: true) do
     RiakTestServer.clear
     Ripple.config = {
-      host: "docker",
-      http_port: TEST_SERVER_HTTP_PORT,
-      pb_port: TEST_SERVER_PB_PORT
+      nodes: [
+        {
+          host: "docker",
+          http_port: TEST_SERVER_HTTP_PORT,
+          pb_port: TEST_SERVER_PB_PORT
+        }
+      ]
     }
   end
 end

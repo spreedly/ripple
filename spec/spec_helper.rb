@@ -28,6 +28,10 @@ RSpec.configure do |config|
   # config.debug = true
   config.include Ripple::Conflict::TestHelper
 
+  config.before :each do
+    Ripple.config ||= {}
+  end
+
   if defined? Java
     config.seed = Time.now.to_i
   else

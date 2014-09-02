@@ -1,5 +1,9 @@
 h1. Ripple Release Notes
 
+h2. 2.1.0 Feature Release
+
+Removes support for ripple.yml configuration; configure with `Ripple.config = {}`.
+
 h2. 2.0.0 Major Release
 
 This moves Ripple forward to support Rails 4.1, and drops support for a lot of functionality not used by Spreedly (search, observers, etc.)

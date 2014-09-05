@@ -1,5 +1,9 @@
 h1. Ripple Release Notes
 
+h2. 2.1.1 Patch Release
+
+Strips out (broken) rake tasks.
+
 h2. 2.1.0 Feature Release
 
 Removes support for ripple.yml configuration; configure with `Ripple.config = {}`.

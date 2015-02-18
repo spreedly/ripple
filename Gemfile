@@ -8,8 +8,8 @@ group :guard do
   gem 'growl'
 end
 
-if File.directory?(File.expand_path("../../riak-client", __FILE__))
-  gem 'riak-client', :path => "../riak-client"
+if File.directory?(File.expand_path("../../riak-ruby-client", __FILE__))
+  gem 'riak-client', :path => "../riak-ruby-client"
 end
 
 platforms :jruby do

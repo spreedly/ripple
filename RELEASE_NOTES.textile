@@ -1,5 +1,9 @@
 h1. Ripple Release Notes
 
+h2. 2.2.0 Rails 4.2 Upgrade
+
+Updates for activemodel and activesupport related to Rails 4.2.
+
 h2. 2.1.1 Patch Release
 
 Strips out (broken) rake tasks.

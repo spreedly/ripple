@@ -11,7 +11,7 @@ module Ripple
 
       def self.to_proc
         @to_proc ||= lambda do |robject|
-          filtered_siblings = robject.siblings.reject { |s| s.content_type == nil }
+          filtered_siblings = robject.siblings.reject { |s| s.respond_to?(:content_type) && s.content_type == nil }
           possible_model_classes = filtered_siblings.map { |s| s.data && s.data['_type'] }.compact.uniq
           return nil unless possible_model_classes.size == 1
 

@@ -8,10 +8,10 @@ module Ripple
       end
 
       describe 'calling the lambda returned by .to_proc' do
-        let(:sibling_1) { stub(:data => { '_type' => 'User' }, :content_type => 'application/json') }
-        let(:sibling_2) { stub(:data => { '_type' => 'User' }, :content_type => 'application/json') }
+        let(:sibling_1) { stub(:data => { '_type' => 'User' }) }
+        let(:sibling_2) { stub(:data => { '_type' => 'User' }) }
         let(:user_siblings) { [sibling_1, sibling_2] }
-        let(:wheel_sibling) { stub(:data => { '_type' => 'Wheel' }, :content_type => 'application/json') }
+        let(:wheel_sibling) { stub(:data => { '_type' => 'Wheel' }) }
         let(:robject) { stub(:siblings => user_siblings) }
         let(:resolved_robject) { stub("Resolved RObject") }
         let(:resolved_document) { stub(:robject => resolved_robject) }

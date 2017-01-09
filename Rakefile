@@ -3,6 +3,14 @@ require 'rubygems/package_task'
 require 'rspec/core'
 require 'rspec/core/rake_task'
 
+# "fix" NoMethodError: undefined method `last_comment'
+module StubRakeLastComment
+  def last_comment
+    last_description
+  end
+end
+Rake::Application.send :include, StubRakeLastComment
+
 def gemspec
   $ripple_gemspec ||= Gem::Specification.load("ripple.gemspec")
 end

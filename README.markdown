@@ -1,8 +1,12 @@
-# `ripple`: Riak Document Models [![Build Status](https://secure.travis-ci.org/basho-labs/ripple.png)](http://travis-ci.org/basho-labs/ripple)
+# `ripple`: Riak Document Models
 
 `ripple` is a rich Ruby modeling layer for Riak, Basho's distributed
 database that contains an ActiveModel-based document abstraction which
 is inspired by ActiveRecord, DataMapper, and MongoMapper.
+
+At Spreedly we use a small subset of ripple's features: mostly the
+`Ripple::Document` declarations wrapped in our own abstraction called
+`CoreDocument` or `IdDocument`.
 
 ## Dependencies
 
@@ -21,7 +25,7 @@ $ bundle install
 
 To run the specs first bring up the [riak-ruby-vagrant](https://github.com/basho-labs/riak-ruby-vagrant) virtual machine.
 
-THen you can run the RSpec suite using `bundle exec`:
+Then you can run the RSpec suite using `bundle exec`:
 
 ``` bash
 $ bundle exec rake spec
@@ -93,7 +97,6 @@ Configure in an initializer:
 ```ruby
 Ripple.config = {
   host: "127.0.0.1",
-  http_port: ENV["RIAK_HTTP_PORT"] || 8098,
   pb_port: ENV["RIAK_PB_PORT"] || 8087
 }
 ```

@@ -1,5 +1,20 @@
 h1. Ripple Release Notes
 
+h2. 3.0.0 Major Release
+
+Update to riak-ruby-client 2.x
+
+* Update the riak-ruby-client dependency to 2.6.0 or above
+* Switch to using Basho's [Riak Ruby Vagrant](https://github.com/basho-labs/riak-ruby-vagrant) virtual machine for local testing instead of a Docker instance.
+
+The Riak Ruby Client 2.x series does a few major things:
+
+* Supports making authenticated connections to Riak
+* Drops support for HTTP connections to Riak
+* Drops support for link walking (already no longer supported by Riak)
+
+[Full Riak Ruby Client 2.x release notes](https://github.com/basho/riak-ruby-client/blob/master/RELNOTES.md#200-release---2014-09-05)
+
 h2. 2.2.0 Rails 4.2 Upgrade
 
 Updates for activemodel and activesupport related to Rails 4.2.

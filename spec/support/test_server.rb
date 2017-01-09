@@ -9,7 +9,6 @@ RSpec.configure do |config|
       nodes: [
         {
           host: "localhost",
-          http_port: TEST_SERVER_HTTP_PORT,
           pb_port: TEST_SERVER_PB_PORT
         }
       ]

@@ -78,18 +78,18 @@ describe Ripple::Document::Finders do
     end
 
     it "should return nil when no object exists at that key" do
-      @bucket.should_receive(:get).with("square", {}).and_raise(Riak::HTTPFailedRequest.new(:get, 200, 404, {}, "404 not found"))
+      @bucket.should_receive(:get).with("square", {}).and_raise(Riak::ProtobuffsFailedRequest.new(:not_found, "not found"))
       box = Box.find("square")
       box.should be_nil
     end
 
     it "should raise DocumentNotFound when using find! if no object exists at that key" do
-      @bucket.should_receive(:get).with("square", {}).and_raise(Riak::HTTPFailedRequest.new(:get, 200, 404, {}, "404 not found"))
+      @bucket.should_receive(:get).with("square", {}).and_raise(Riak::ProtobuffsFailedRequest.new(:not_found, "not found"))
       lambda { Box.find!("square") }.should raise_error(Ripple::DocumentNotFound, "Couldn't find document with key: square")
     end
 
     it "should re-raise the failed request exception if not a 404" do
-      @bucket.should_receive(:get).with("square", {}).and_raise(Riak::HTTPFailedRequest.new(:get, 200, 500, {}, "500 internal server error"))
+      @bucket.should_receive(:get).with("square", {}).and_raise(Riak::ProtobuffsFailedRequest.new(:internal_server_error, "internal server error"))
       lambda { Box.find("square") }.should raise_error(Riak::FailedRequest)
     end
 
@@ -121,7 +121,7 @@ describe Ripple::Document::Finders do
     describe "when using find with missing keys" do
       before :each do
         @bucket.should_receive(:get).with("square", {}).and_return(@plain)
-        @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::HTTPFailedRequest.new(:get, 200, 404, {}, "404 not found"))
+        @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::ProtobuffsFailedRequest.new(:not_found, "not found"))
       end
 
       it "should return nil for documents that no longer exist" do
@@ -161,7 +161,7 @@ describe Ripple::Document::Finders do
     describe "when using find with missing keys" do
       before :each do
         @bucket.should_receive(:get).with("square", {}).and_return(@plain)
-        @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::HTTPFailedRequest.new(:get, 200, 404, {}, "404 not found"))
+        @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::ProtobuffsFailedRequest.new(:not_found, "not found"))
       end
 
       it "should return nil for documents that no longer exist" do
@@ -187,7 +187,7 @@ describe Ripple::Document::Finders do
     it "should exclude objects that are not found" do
       @bucket.should_receive(:keys).and_return(["square", "rectangle"])
       @bucket.should_receive(:get).with("square", {}).and_return(@plain)
-      @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::HTTPFailedRequest.new(:get, 200, 404, {}, "404 not found"))
+      @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::ProtobuffsFailedRequest.new(:not_found, "not found"))
       boxes = Box.list
       boxes.should have(1).item
       boxes.first.shape.should == "square"
@@ -196,7 +196,7 @@ describe Ripple::Document::Finders do
     it "should yield found objects to the passed block, excluding missing objects, and return an empty array" do
       @bucket.should_receive(:keys).and_yield(["square"]).and_yield(["rectangle"])
       @bucket.should_receive(:get).with("square", {}).and_return(@plain)
-      @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::HTTPFailedRequest.new(:get, 200, 404, {}, "404 not found"))
+      @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::ProtobuffsFailedRequest.new(:not_found, "not found"))
       @block = mock()
       @block.should_receive(:ping).once
       Box.list do |box|

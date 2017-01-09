@@ -21,16 +21,16 @@ describe Ripple do
 
   it "should allow setting the client manually" do
     Ripple.should respond_to(:client=)
-    client = Riak::Client.new(:http_port => 9000)
+    client = Riak::Client.new(:pb_port => 9000)
     Ripple.client = client
     Ripple.client.should == client
   end
 
   it "should reset the client when the configuration changes" do
     c = Ripple.client
-    Ripple.config = {:http_port => 9000}
+    Ripple.config = {:pb_port => 9000}
     Ripple.client.should_not == c
-    Ripple.client.node.http_port.should == 9000
+    Ripple.client.node.pb_port.should == 9000
   end
 
   describe "date format" do

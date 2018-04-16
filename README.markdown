@@ -23,12 +23,10 @@ get started:
 $ bundle install
 ```
 
-To run the specs first bring up the [riak-ruby-vagrant](https://github.com/basho-labs/riak-ruby-vagrant) virtual machine.
-
 Then you can run the RSpec suite using `bundle exec`:
 
 ``` bash
-$ bundle exec rake spec
+$ bundle exec rake spec:all
 ```
 
 ## Document Model Examples

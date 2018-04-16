@@ -2,13 +2,6 @@ require 'spec_helper'
 require 'active_support/core_ext/array'
 
 describe Ripple::NestedAttributes, :integration => true do
-  # require 'support/models/car'
-  # require 'support/models/driver'
-  # require 'support/models/passenger'
-  # require 'support/models/engine'
-  # require 'support/models/seat'
-  # require 'support/models/wheel'
-
   context "one :driver (link)" do
     subject { Car.new }
 
@@ -71,6 +64,7 @@ describe Ripple::NestedAttributes, :integration => true do
     it { should respond_to(:passengers_attributes=) }
 
     it "should not have passengers" do
+      pending("Linked associations are deprecated")
       subject.passengers.should == []
     end
 
@@ -82,16 +76,19 @@ describe Ripple::NestedAttributes, :integration => true do
                                                     { :name => 'Pat' } ] ) }
 
       it "should have 3 passengers" do
+        pending("Linked associations are deprecated")
         subject.passengers.size.should == 3
       end
 
       it "should have 3 passengers with specified names" do
+        pending("Linked associations are deprecated")
         subject.passengers.first.name.should == 'Joe'
         subject.passengers.second.name.should == 'Sue'
         subject.passengers.third.name.should == 'Pat'
       end
 
       it "should save the children when saving the parent" do
+        pending("Linked associations are deprecated")
         subject.save
         found_subject = Car.find(subject.key)
         found_subject.passengers.map(&:name).should =~ %w[ Joe Sue Pat ]
@@ -111,10 +108,12 @@ describe Ripple::NestedAttributes, :integration => true do
       end
 
       it "should have 3 passengers" do
+        pending("Linked associations are deprecated")
         subject.passengers.size.should == 3
       end
 
       it "should update attributes" do
+        pending("Linked associations are deprecated")
         subject.passengers_attributes = [ { :key => passenger1.key, :name => 'UPDATED One' },
                                           { :key => passenger2.key, :name => 'UPDATED Two' },
                                           { :key => passenger3.key, :name => 'UPDATED Three' } ]
@@ -124,6 +123,7 @@ describe Ripple::NestedAttributes, :integration => true do
       end
 
       it "should not save the child if attributes haven't been updated" do
+        pending("Linked associations are deprecated")
         subject.passengers.each do |passenger|
           passenger.should_not_receive(:save)
         end
@@ -131,6 +131,7 @@ describe Ripple::NestedAttributes, :integration => true do
       end
 
       it "should save the child when saving the parent" do
+        pending("Linked associations are deprecated")
         subject.passengers_attributes = [ { :key => passenger1.key, :name => 'UPDATED One' },
                                           { :key => passenger2.key, :name => 'UPDATED Two' },
                                           { :key => passenger3.key, :name => 'UPDATED Three' } ]

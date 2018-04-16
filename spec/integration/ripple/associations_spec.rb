@@ -91,6 +91,7 @@ describe "Ripple Associations" do
   end
 
   it "should save a many linked association" do
+    pending("Linked associations are deprecated")
     @user.friends << @friend1 << @friend2
     @user.save
     @user.should_not be_new_record
@@ -100,6 +101,7 @@ describe "Ripple Associations" do
   end
 
   it "should save a one linked association" do
+    pending("Linked associations are deprecated")
     @user.emergency_contact = @friend1
     @user.save
     @user.should_not be_new_record
@@ -108,6 +110,7 @@ describe "Ripple Associations" do
   end
 
   it "should reload associations" do
+    pending("Linked associations are deprecated")
     @user.friends << @friend1
     @user.save!
 
@@ -120,6 +123,7 @@ describe "Ripple Associations" do
   end
 
   it "allows and autosaves transitive linked associations" do
+    pending("Linked associations are deprecated")
     friend = User.new(:email => 'user-friend@example.com')
     friend.key = 'main-user-friend'
     @user.key = 'main-user'

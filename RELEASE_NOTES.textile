@@ -1,5 +1,10 @@
 h1. Ripple Release Notes
 
+h2. 3.1.0 Release
+
+* Deprecate linked associations. All support for linked associations will be dropped in a future release.
+* Switch back to [Riak Test Server](https://github.com/spreedly/riak_test_server) for local testing instead of Basho's defunct Vagrant virtual machine.
+
 h2. 3.0.0 Major Release
 
 Update to riak-ruby-client 2.x

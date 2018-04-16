@@ -47,6 +47,7 @@ module Ripple
       end
 
       def robjects
+        ActiveSupport::Deprecation.warn("Link walking and linked associations are deprecated and will be removed in a future release of Ripple.")
         walk_result = begin
           @owner.robject.walk(*Array(@reflection.link_spec)).first || []
         rescue

@@ -13,9 +13,6 @@ module Ripple
           records = modifiers.map { |_| klass.find!(key) }
 
           records.zip(modifiers).each do |(record, modifier)|
-            # necessary to get conflict on 0.14 and earlier, so riak thinks they are being saved by different clients
-            Ripple.client.client_id += 1
-
             modifier.call(record)
             record.save! unless record.deleted?
           end

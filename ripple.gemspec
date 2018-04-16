@@ -15,6 +15,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "minitest"
   gem.add_development_dependency "rspec", "~>2.8.0"
   gem.add_development_dependency "rake"
+  gem.add_development_dependency "pry"
+  gem.add_development_dependency "pry-byebug"
 
   gem.add_dependency "riak-client", "~> 2.6"
   gem.add_dependency "activesupport", "~> 4.2.0"
@@ -25,6 +27,5 @@ Gem::Specification.new do |gem|
   ignores = File.read(".gitignore").split(/\r?\n/).reject{ |f| f =~ /^(#.+|\s*)$/ }.map {|f| Dir[f] }.flatten
   gem.files         = (Dir['**/*','.gitignore'] - ignores).reject {|f| !File.file?(f) }
   gem.test_files    = (Dir['spec/**/*','.gitignore'] - ignores).reject {|f| !File.file?(f) }
-  # gem.executables   = Dir['bin/*'].map { |f| File.basename(f) }
   gem.require_paths = ['lib']
 end

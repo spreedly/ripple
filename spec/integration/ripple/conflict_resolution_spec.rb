@@ -240,6 +240,7 @@ describe "Ripple conflict resolution", :integration => true do
     end
 
     it 'sets the association to nil and includes its name in the list of conflicts passed to the on_conflict block' do
+      pending("Linked associations are deprecated")
       record_spouse = conflicts = sibling_spouse_names = nil
 
       ConflictedPerson.on_conflict do |siblings, c|
@@ -263,6 +264,7 @@ describe "Ripple conflict resolution", :integration => true do
     end
 
     it 'sets the association to a blank array and includes its name in the list of conflicts passed to the on_conflict block' do
+      pending("Linked associations are deprecated")
       record_friends = conflicts = sibling_friend_names = nil
 
       ConflictedPerson.on_conflict do |siblings, c|

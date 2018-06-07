@@ -46,6 +46,15 @@ describe Ripple::Callbacks do
       callbacks.should == [ :before, :around, :after ]
     end
 
+    it 'halts the callback chain when false is returned' do
+      callbacks = []
+      doc.before_save { callbacks << :before; false }
+      doc.after_save { callbacks << :after }
+      doc.around_save(lambda { callbacks << :around })
+      subject.save
+      callbacks.should == [ :before ]
+    end
+
     it "propagates callbacks to embedded associated documents" do
       callbacks = []
       doc.before_save { callbacks << :box }

@@ -12,7 +12,7 @@ module Ripple
     included do
       extend ActiveModel::Callbacks
       define_model_callbacks *(CALLBACK_TYPES - [:validation])
-      define_callbacks :validation, :terminator => proc{|_,result| result == false}, :scope => [:kind, :name]
+      define_callbacks :validation, :terminator => proc{|_,result| result.call == false}, :scope => [:kind, :name]
     end
 
     module ClassMethods

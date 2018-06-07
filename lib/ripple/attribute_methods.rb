@@ -66,7 +66,7 @@ module Ripple
     # @param [Hash] attrs the attributes to assign
     # @param [Hash] options assignment options
     def assign_attributes(attrs, options={})
-      raise ArgumentError, t('attribute_hash') unless(Hash === attrs)
+      raise ArgumentError, t('attribute_hash') unless(attrs.respond_to?(:each))
 
       attrs = sanitize_for_mass_assignment(attrs)
 

@@ -4,8 +4,8 @@ require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/object/json'
 require 'active_support/core_ext/date/conversions'
 require 'active_support/core_ext/date/zones'
+require 'active_support/core_ext/date_and_time/zones'
 require 'active_support/core_ext/date_time/conversions'
-require 'active_support/core_ext/date_time/zones'
 require 'active_support/core_ext/time/conversions'
 require 'active_support/core_ext/time/zones'
 require 'active_support/core_ext/string/conversions'
@@ -119,7 +119,8 @@ end
 # @private
 class DateTime
   def as_json(options={})
-    self.utc.to_s(Ripple.date_format)
+    datetime = self.utc.to_datetime
+    datetime.to_s(Ripple.date_format)
   end
 
   def self.ripple_cast(value)

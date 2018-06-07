@@ -1,8 +1,8 @@
 require 'tzinfo'
 require 'active_support/core_ext/date/conversions'
 require 'active_support/core_ext/date/zones'
+require 'active_support/core_ext/date_and_time/zones'
 require 'active_support/core_ext/date_time/conversions'
-require 'active_support/core_ext/date_time/zones'
 require 'active_support/core_ext/time/conversions'
 require 'active_support/core_ext/time/zones'
 require 'active_support/core_ext/string/conversions'
@@ -51,7 +51,8 @@ class DateTime
   def to_ripple_index(type)
     case type
     when 'bin'
-      utc.to_s(Ripple.date_format)
+      datetime = self.utc.to_datetime
+      datetime.to_s(Ripple.date_format)
     when 'int'
       (utc.to_f * 1000).round
     end

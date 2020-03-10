@@ -82,28 +82,32 @@ describe "Ripple conflict resolution", :integration => true do
     end
 
     it 'indicates that one of the siblings was deleted' do
-      siblings = nil
-      ConflictedPerson.on_conflict { |s, c| siblings = s }
-      ConflictedPerson.find('John')
+      pending('resolution of https://github.com/basho/riak-ruby-client/pull/316') do
+        siblings = nil
+        ConflictedPerson.on_conflict { |s, c| siblings = s }
+        ConflictedPerson.find('John')
 
-      siblings.should have(3).sibling_records
-      deleted, undeleted = siblings.partition(&:deleted?)
-      deleted.should have(1).record
-      undeleted.should have(2).records
-      deleted = deleted.first
+        siblings.should have(3).sibling_records
+        deleted, undeleted = siblings.partition(&:deleted?)
+        deleted.should have(1).record
+        undeleted.should have(2).records
+        deleted = deleted.first
 
-      # the deleted record should be totally blank except for the name (since it is the key)
-      deleted.attributes.reject { |k, v| v.blank? }.should == {"name" => "John"}
+        # the deleted record should be totally blank except for the name (since it is the key)
+        deleted.attributes.reject { |k, v| v.blank? }.should == {"name" => "John"}
+      end
     end
 
     it 'does not consider the deleted sibling when trying basic resolution of attributes that siblings are in agreement about' do
-      record = conflicts = nil
-      ConflictedPerson.on_conflict { |s, c| conflicts = c; record = self }
-      ConflictedPerson.find('John')
+      pending('resolution of https://github.com/basho/riak-ruby-client/pull/316') do
+        record = conflicts = nil
+        ConflictedPerson.on_conflict { |s, c| conflicts = c; record = self }
+        ConflictedPerson.find('John')
 
-      conflicts.should == [:age]
-      record.gender.should == 'male'
-      record.favorite_colors.should == ['green'].to_set
+        conflicts.should == [:age]
+        record.gender.should == 'male'
+        record.favorite_colors.should == ['green'].to_set
+      end
     end
   end
 

@@ -66,48 +66,6 @@ module Ripple
           found
         end
 
-        # Find the first object using the first key in the
-        # bucket's keys using find. You should not expect to
-        # actually get the first object you added to the bucket.
-        # This is just a convenience method.
-        def first
-          find(bucket.keys.first)
-        end
-
-        # Find the first object using the first key in the
-        # bucket's keys using find!
-        def first!
-          find!(bucket.keys.first)
-        end
-
-        # Find all documents in the Document's bucket and return them.
-        # @overload list()
-        #   Get all documents and return them in an array.
-        #   @param [Hash] options options to be passed to the
-        #     underlying {Bucket#keys} method.
-        #   @return [Array<Document>] all found documents in the bucket
-        # @overload list() {|doc| ... }
-        #   Stream all documents in the bucket through the block.
-        #   @yield [Document] doc a found document
-        # @note This operation is incredibly expensive and should not
-        #     be used in production applications.
-        def list
-          if block_given?
-            bucket.keys do |keys|
-              keys.each do |key|
-                obj = find_one(key)
-                yield obj if obj
-              end
-            end
-            []
-          else
-            bucket.keys.inject([]) do |acc, k|
-              obj = find_one(k)
-              obj ? acc << obj : acc
-            end
-          end
-        end
-
         private
         def find_one(key)
           instantiate(bucket.get(key, quorums.slice(:r)))

@@ -44,23 +44,6 @@ describe Ripple::Document::Finders do
       box.changes.should == {}
     end
 
-    it "should find the first document using the first key with the bucket's keys" do
-      box  = Box.new
-      keys = ['some_boxes_key']
-      Box.stub!(:find).and_return(box)
-      @bucket.stub!(:keys).and_return(keys)
-      @bucket.should_receive(:keys)
-      keys.should_receive(:first)
-      Box.first.should == box
-    end
-
-    it "should use find! when using first!" do
-      box = Box.new
-      Box.stub!(:find!).and_return(box)
-      @bucket.stub!(:keys).and_return(['key'])
-      Box.first!.should == box
-    end
-
     it "should not raise an exception when finding an existing document with find!" do
       lambda { Box.find!("square") }.should_not raise_error(Ripple::DocumentNotFound)
     end
@@ -170,39 +153,6 @@ describe Ripple::Document::Finders do
         boxes.first.shape.should == "square"
         boxes.last.should be_nil
       end
-    end
-  end
-
-  describe "listings all documents in the bucket" do
-    it "should load all objects in the bucket" do
-      @bucket.should_receive(:keys).and_return(["square", "rectangle"])
-      @bucket.should_receive(:get).with("square", {}).and_return(@plain)
-      @bucket.should_receive(:get).with("rectangle", {}).and_return(@cb)
-      boxes = Box.list
-      boxes.should have(2).items
-      boxes.first.shape.should == "square"
-      boxes.last.shape.should == "rectangle"
-    end
-
-    it "should exclude objects that are not found" do
-      @bucket.should_receive(:keys).and_return(["square", "rectangle"])
-      @bucket.should_receive(:get).with("square", {}).and_return(@plain)
-      @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::ProtobuffsFailedRequest.new(:not_found, "not found"))
-      boxes = Box.list
-      boxes.should have(1).item
-      boxes.first.shape.should == "square"
-    end
-
-    it "should yield found objects to the passed block, excluding missing objects, and return an empty array" do
-      @bucket.should_receive(:keys).and_yield(["square"]).and_yield(["rectangle"])
-      @bucket.should_receive(:get).with("square", {}).and_return(@plain)
-      @bucket.should_receive(:get).with("rectangle", {}).and_raise(Riak::ProtobuffsFailedRequest.new(:not_found, "not found"))
-      @block = mock()
-      @block.should_receive(:ping).once
-      Box.list do |box|
-        @block.ping
-        ["square", "rectangle"].should include(box.shape)
-      end.should == []
     end
   end
 

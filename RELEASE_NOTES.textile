@@ -1,5 +1,9 @@
 h1. Ripple Release Notes
 
+h2. 4.0.0 Release
+
+Support for Rails 5.0
+
 h2. 3.1.0 Release
 
 * Deprecate linked associations. All support for linked associations will be dropped in a future release.

@@ -11,7 +11,7 @@ module Ripple
         # @private
         def instantiate(robject)
           super(robject).tap do |o|
-            o.changed_attributes.clear
+            o.clear_attribute_changes(o.changed_attributes.keys)
           end
         end
       end
@@ -20,7 +20,7 @@ module Ripple
       def really_save(*args)
         if result = super
           @previously_changed = changes
-          changed_attributes.clear
+          clear_attribute_changes(changed_attributes.keys)
         end
         result
       end
@@ -28,14 +28,18 @@ module Ripple
       # @private
       def reload
         super.tap do
-          changed_attributes.clear
+          clear_attribute_changes(changed_attributes.keys)
         end
       end
 
       # @private
       def initialize(*args)
         super
-        changed_attributes.clear
+        clear_attribute_changes(changed_attributes.keys)
+      end
+
+      def previous_changes
+        @previously_changed ||= ActiveSupport::HashWithIndifferentAccess.new
       end
 
       # Determines if the document has any chnages.
@@ -49,7 +53,7 @@ module Ripple
 
       private
       def attribute=(attr_name, value)
-        if self.class.properties.include?(attr_name.to_sym) && @attributes[attr_name] != value
+        if self.class.properties.include?(attr_name.to_sym) && @__attributes[attr_name] != value
           attribute_will_change!(attr_name)
         end
         super

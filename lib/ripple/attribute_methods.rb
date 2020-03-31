@@ -56,7 +56,7 @@ module Ripple
     end
 
     def raw_attributes
-      self.class.properties.values.inject(@attributes.with_indifferent_access) do |hash, prop|
+      self.class.properties.values.inject(@__attributes.with_indifferent_access) do |hash, prop|
         hash[prop.key] = attribute(prop.key)
         hash
       end
@@ -101,7 +101,7 @@ module Ripple
     # @private
     def initialize(attrs={}, options={})
       super()
-      @attributes = attributes_from_property_defaults
+      @__attributes = attributes_from_property_defaults
       assign_attributes(attrs, options)
       yield self if block_given?
     end

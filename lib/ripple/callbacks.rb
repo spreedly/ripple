@@ -21,7 +21,7 @@ module Ripple
         options = args.last
         if options.is_a?(Hash) && options[:on]
           options[:if] = Array(options[:if])
-          options[:if] << "@_on_validate == :#{options[:on]}"
+          options[:if] << -> { @_on_validate == options[:on] }
         end
         set_callback(:validation, :before, *args, &block)
       end
@@ -31,7 +31,7 @@ module Ripple
         options = args.extract_options!
         options[:prepend] = true
         options[:if] = Array(options[:if])
-        options[:if] << "@_on_validate == :#{options[:on]}" if options[:on]
+        options[:if] << -> { @_on_validate == options[:on] } if options[:on]
         set_callback(:validation, :after, *(args << options), &block)
       end
     end

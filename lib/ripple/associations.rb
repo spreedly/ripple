@@ -177,7 +177,13 @@ module Ripple
             end
           )
           runner = filtered_cbs.compile
-          runner.call(ActiveSupport::Callbacks::Filters::Environment.new(doc, false, nil, nil)).value
+
+          env = ActiveSupport::Callbacks::Filters::Environment.new(doc, false, nil)
+          if kind == :before
+            runner.invoke_before(env)
+          else
+            runner.invoke_after(env)
+          end
         end
       end
     end
@@ -189,7 +195,7 @@ module Ripple
     def run_callbacks(name, *args, &block)
       # validation is already propagated to embedded documents via the
       # AssociatedValidator.  We don't need to duplicate the propagation here.
-      return super if name == :validation
+      return super if [:validation, :validate].include?(name)
 
       propagate_callbacks_to_embedded_associations(name, :before)
       return_value = super
@@ -382,7 +388,7 @@ module Ripple
     def find_class(scope, class_name)
       return nil if class_name.include?("::")
       class_sym = class_name.to_sym
-      parent_scope = scope.parents.unshift(scope).find {|s| s.const_defined?(class_sym, false) }
+      parent_scope = scope.module_parents.unshift(scope).find {|s| s.const_defined?(class_sym, false) }
       parent_scope.const_get(class_sym) if parent_scope
     end
   end

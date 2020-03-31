@@ -1,5 +1,9 @@
 h1. Ripple Release Notes
 
+h2. 6.0.0 Release
+
+Support for Rails 6.0
+
 h2. 5.0.0 Release
 
 Finders not based on keys (notably, `list`) have been removed. They are not needed in production and represent a security concern.

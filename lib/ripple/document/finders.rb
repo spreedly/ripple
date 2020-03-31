@@ -80,7 +80,7 @@ module Ripple
             doc.__send__(:raw_attributes=, robject.data.except("_type")) if robject.data
             doc.instance_variable_set(:@new, false)
             doc.instance_variable_set(:@robject, robject)
-            doc.changed_attributes.clear
+            doc.clear_attribute_changes(doc.changed_attributes.keys)
           end
         end
       end

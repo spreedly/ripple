@@ -91,6 +91,10 @@ describe Ripple::Document do
       value1.should == value2
     end
 
+    def assert_respond_to(value, method_name)
+      value.should respond_to(method_name)
+    end
+
     ActiveModel::Lint::Tests.instance_methods.grep(/^test/).each do |m|
       it "#{m}" do
         send(m)

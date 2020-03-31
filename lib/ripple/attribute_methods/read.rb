@@ -17,8 +17,8 @@ module Ripple
 
       private
       def attribute(attr_name)
-        if @attributes.include?(attr_name)
-          @attributes[attr_name]
+        if @__attributes.include?(attr_name)
+          @__attributes[attr_name]
         else
           nil
         end

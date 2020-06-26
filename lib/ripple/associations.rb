@@ -177,7 +177,13 @@ module Ripple
             end
           )
           runner = filtered_cbs.compile
-          runner.call(ActiveSupport::Callbacks::Filters::Environment.new(doc, false, nil, nil)).value
+          
+          env = ActiveSupport::Callbacks::Filters::Environment.new(doc, false, nil)
+          if kind == :before
+            runner.invoke_before(env)
+          else
+            runner.invoke_after(env)
+          end
         end
       end
     end

@@ -17,7 +17,7 @@ RSpec.configure do |config|
       protocol: 'pbc',
       nodes: [
         {
-          host: "docker",
+          host: "localhost",
           pb_port: TEST_SERVER_PB_PORT
         }
       ]

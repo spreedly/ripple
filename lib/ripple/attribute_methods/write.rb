@@ -18,7 +18,7 @@ module Ripple
         if prop = self.class.properties[attr_name]
           value = prop.type_cast(value)
         end
-        @attributes[attr_name] = value
+        @__attributes[attr_name] = value
       end
     end
   end

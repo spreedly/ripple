@@ -197,7 +197,7 @@ describe Ripple::AttributeMethods do
   it "should allow adding to the @attributes hash for attributes that do not exist" do
     @widget = Widget.new
     @widget['foo'] = 'bar'
-    @widget.instance_eval { @attributes['foo'] }.should == 'bar'
+    @widget.instance_eval { @__attributes['foo'] }.should == 'bar'
   end
 
   it "should allow reading from the @attributes hash for attributes that do not exist" do

@@ -177,7 +177,7 @@ module Ripple
             end
           )
           runner = filtered_cbs.compile
-          
+
           env = ActiveSupport::Callbacks::Filters::Environment.new(doc, false, nil)
           if kind == :before
             runner.invoke_before(env)
@@ -195,7 +195,7 @@ module Ripple
     def run_callbacks(name, *args, &block)
       # validation is already propagated to embedded documents via the
       # AssociatedValidator.  We don't need to duplicate the propagation here.
-      return super if name == :validation
+      return super if [:validation, :validate].include?(name)
 
       propagate_callbacks_to_embedded_associations(name, :before)
       return_value = super

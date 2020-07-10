@@ -154,6 +154,7 @@ module Ripple
 
     private
 
+    # possibly could return false
     def save_nested_attributes_for_one_association(association_name)
       throw(:abort) unless send(association_name).save
     end

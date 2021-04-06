@@ -1,8 +1,12 @@
 h1. Ripple Release Notes
 
+h2. 5.2.1 Release
+
+Support for Rails 5.2.5
+
 h2. 5.2.0 Release
 
-Support for Rails 5.2
+Support for Rails 5.2.4
 
 h2. 5.0.0 Release
 

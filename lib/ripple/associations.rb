@@ -388,7 +388,7 @@ module Ripple
     def find_class(scope, class_name)
       return nil if class_name.include?("::")
       class_sym = class_name.to_sym
-      parent_scope = scope.parents.unshift(scope).find {|s| s.const_defined?(class_sym, false) }
+      parent_scope = scope.module_parents.unshift(scope).find {|s| s.const_defined?(class_sym, false) }
       parent_scope.const_get(class_sym) if parent_scope
     end
   end

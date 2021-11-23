@@ -5,6 +5,8 @@ require 'active_support/core_ext/hash/except'
 require 'active_support/core_ext/hash/slice'
 require 'ripple/conflict/resolver'
 
+require 'net/http'
+
 module Ripple
 
   # Raised by <tt>find!</tt> when a document cannot be found with the given key.
@@ -71,6 +73,16 @@ module Ripple
           instantiate(bucket.get(key, quorums.slice(:r)))
         rescue Riak::FailedRequest => fr
           raise fr unless fr.not_found?
+
+          host = Ripple.backup_http_host
+          port = Ripple.backup_http_port
+          return nil unless host && port
+
+          resp = Net::HTTP.get_response(host, "/buckets/#{bucket.name}/keys/#{key}", port)
+          return nil unless resp&.code == "200"
+          ro = bucket.new(key)
+          ro.raw_data = resp.body
+          instantiate(ro)
         end
 
         def instantiate(robject)

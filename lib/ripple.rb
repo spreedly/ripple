@@ -11,6 +11,8 @@ require 'ripple/embedded_document'
 # the basic Riak client.
 module Ripple
   class << self
+    attr_accessor :backup_http_host, :backup_http_port
+
     # @return [Riak::Client] The client for the current thread.
     def client
       Thread.current[:ripple_client] ||= Riak::Client.new(client_config)

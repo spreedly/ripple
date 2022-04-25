@@ -87,7 +87,7 @@ describe Ripple::Document do
       value.should be_kind_of(klass)
     end
 
-    def assert_equal(value1, value2)
+    def assert_equal(value1, value2, message="")
       value1.should == value2
     end
 

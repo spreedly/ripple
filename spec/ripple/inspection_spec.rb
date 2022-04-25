@@ -7,16 +7,16 @@ describe Ripple::Inspection do
   shared_examples_for 'an inspected document' do |method|
 
     it "should include the class name in the inspect string" do
-      @box.send(method).should be_starts_with("<Box")
+      @box.send(method).should be_start_with("<Box")
     end
 
     it "should include the key in the #{method} string for documents" do
       @box.key = "square"
-      @box.send(method).should be_starts_with("<Box:square")
+      @box.send(method).should be_start_with("<Box:square")
     end
 
     it "should indicate a new document when no key is specified" do
-      @box.send(method).should be_starts_with("<Box:[new]")
+      @box.send(method).should be_start_with("<Box:[new]")
     end
 
     it "should not display a key for embedded documents" do

@@ -78,7 +78,7 @@ module Ripple
           port = Ripple.backup_http_port
           return nil unless host && port
 
-          resp = Net::HTTP.get_response(host, "/buckets/#{bucket.name}/keys/#{key}", port)
+          resp = Net::HTTP.get_response(host, "/buckets/#{ERB::Util.url_encode(bucket.name)}/keys/#{key}", port)
           return nil unless resp&.code == "200"
           ro = bucket.new(key)
           ro.raw_data = resp.body

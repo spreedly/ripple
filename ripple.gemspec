@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rake"
 
   gem.add_dependency "riak-client", "~> 2.6"
-  gem.add_dependency "activesupport", "~> 6.1.5"
+  gem.add_dependency "activesupport", ">= 6.1.5"
   gem.add_dependency "activemodel", ">= 5.2.4"
   gem.add_dependency "tzinfo"
 

@@ -155,35 +155,13 @@ module Ripple
         attrs
       end
     end
-
-    def propagate_callbacks_to_embedded_associations(name, kind)
+    
+    def propagate_callbacks_to_embedded_associations(name, _kind)
       self.class.embedded_associations.each do |association|
         documents = instance_variable_get(association.ivar)
-        # We must explicitly check #nil? (rather than just saying `if documents`)
-        # because documents can be an association proxy that is proxying nil.
-        # In this case ruby treats documents as true because it is not _really_ nil,
-        # but #nil? will tell us if it is proxying nil.
         next if documents.nil?
-
         Array(documents).each do |doc|
-          cbs = doc.send("_#{name}_callbacks")
-          filtered_cbs = ActiveSupport::Callbacks::CallbackChain.new(
-            cbs.name,
-            cbs.config
-          )
-          filtered_cbs.append(
-            *cbs.select do |callback|
-              callback.kind == kind
-            end
-          )
-          runner = filtered_cbs.compile
-
-          env = ActiveSupport::Callbacks::Filters::Environment.new(doc, false, nil)
-          if kind == :before
-            runner.invoke_before(env)
-          else
-            runner.invoke_after(env)
-          end
+          doc.run_callbacks(name) {}
         end
       end
     end
